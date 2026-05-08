@@ -4,9 +4,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { SectionWrapper } from "../shared/SectionWrapper";
 import { GlowButton } from "../shared/GlowButton";
-import { GradientBadge } from "../shared/GradientBadge";
 import { MetricCard } from "../shared/MetricCard";
-import { Sparkles, ArrowRight, ShieldCheck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export function Hero() {
   return (
