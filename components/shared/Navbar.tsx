@@ -52,11 +52,13 @@ export function Navbar() {
         </nav>
 
         {/* CTAs */}
+        <Link href="/audit">
         <div className="flex items-center gap-4">
           <GlowButton size="sm" className="font-semibold">
             Run Audit
           </GlowButton>
         </div>
+        </Link>
       </div>
     </motion.header>
   );

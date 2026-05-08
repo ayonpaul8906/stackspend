@@ -6,6 +6,7 @@ import { SectionWrapper } from "../shared/SectionWrapper";
 import { GlowButton } from "../shared/GlowButton";
 import { MetricCard } from "../shared/MetricCard";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export function Hero() {
   return (
@@ -40,13 +41,17 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
           >
+            <Link href="/audit">
             <GlowButton size="lg" className="w-full sm:w-auto text-lg">
               Run Free Audit
               <ArrowRight className="w-5 h-5 ml-2" />
             </GlowButton>
+            </Link>
+            <Link href="/sample-report">
             <GlowButton variant="outline" size="lg" className="w-full sm:w-auto text-lg">
               View Sample Report
             </GlowButton>
+            </Link>
           </motion.div>
         </div>
 

@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "StackSpend | Stop Overspending on AI Tools",
+  title: "StackSpend",
   description: "Audit your ChatGPT, Claude, Cursor, and API spend in under 60 seconds.",
 };
 
