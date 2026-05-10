@@ -34,15 +34,32 @@ export function AuditForm() {
     name: "tools",
   });
 
-  const onSubmit = (data: AuditFormValues) => {
-    // Run deterministic rules
-    const result = runAuditEngine(data);
-    
-    // Save to local storage to pass to the results page
-    localStorage.setItem("stackspend-audit-result", JSON.stringify(result));
-    
-    // Navigate
-    router.push("/results");
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+
+  const onSubmit = async (data: AuditFormValues) => {
+    setIsSubmitting(true);
+    try {
+      // Run deterministic rules
+      const result = runAuditEngine(data);
+      
+      // Generate unique ID
+      const auditId = crypto.randomUUID();
+      
+      // Request AI summary from secure server action
+      // Import this dynamically or at the top of file
+      const { generateSummaryAction } = await import("@/app/actions/audit");
+      const aiSummary = await generateSummaryAction(result, data);
+      
+      // Save to Firestore
+      const { saveAuditToFirestore } = await import("@/lib/firebase/firestore");
+      await saveAuditToFirestore(data, result, aiSummary, auditId);
+      
+      // Navigate to public shareable URL
+      router.push(`/results/${auditId}`);
+    } catch (error) {
+      console.error("Failed to submit audit:", error);
+      setIsSubmitting(false);
+    }
   };
 
   const addTool = () => {
@@ -119,16 +136,15 @@ export function AuditForm() {
             </div>
           </section>
 
-          {/* Action Area */}
           <div className="pt-8 border-t border-border flex justify-end">
             <GlowButton 
               type="submit" 
               size="lg" 
-              disabled={fields.length === 0}
+              disabled={fields.length === 0 || isSubmitting}
               className="w-full sm:w-auto"
             >
-              Generate Audit Report
-              <ArrowRight className="w-5 h-5 ml-2" />
+              {isSubmitting ? "Analyzing Stack..." : "Generate Audit Report"}
+              {!isSubmitting && <ArrowRight className="w-5 h-5 ml-2" />}
             </GlowButton>
           </div>
         </div>
