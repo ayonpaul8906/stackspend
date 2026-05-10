@@ -1,5 +1,5 @@
 import { db } from "./client";
-import { collection, addDoc, doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { AuditResult } from "@/lib/audit-engine";
 import { AuditFormState } from "@/types/audit";
 
@@ -33,8 +33,9 @@ export async function saveAuditToFirestore(
       aiSummary,
       createdAt: serverTimestamp(),
     });
-  } catch (error: any) {
-    console.warn("Firebase write failed (likely missing permissions). Falling back to local storage.", error?.message);
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : "";
+    console.warn("Firebase write failed (likely missing permissions). Falling back to local storage.", errMsg);
     const { fallbackSaveAudit } = await import("./fallback");
     await fallbackSaveAudit(id, { ...auditResult, formState, aiSummary });
   }
@@ -43,22 +44,29 @@ export async function saveAuditToFirestore(
 }
 
 // Helper to parse Firestore REST API response
-function parseFirestoreValue(value: any): any {
-  if (!value) return null;
-  if ("stringValue" in value) return value.stringValue;
-  if ("integerValue" in value) return parseInt(value.integerValue, 10);
-  if ("doubleValue" in value) return parseFloat(value.doubleValue);
-  if ("booleanValue" in value) return value.booleanValue;
-  if ("arrayValue" in value) return (value.arrayValue.values || []).map(parseFirestoreValue);
-  if ("mapValue" in value) {
-    const obj: any = {};
-    const fields = value.mapValue.fields || {};
+function parseFirestoreValue(value: unknown): unknown {
+  if (!value || typeof value !== "object") return value;
+  
+  const valObj = value as Record<string, unknown>;
+  
+  if ("stringValue" in valObj) return valObj.stringValue;
+  if ("integerValue" in valObj) return parseInt(valObj.integerValue as string, 10);
+  if ("doubleValue" in valObj) return parseFloat(valObj.doubleValue as string);
+  if ("booleanValue" in valObj) return valObj.booleanValue;
+  if ("arrayValue" in valObj) {
+    const arrVal = valObj.arrayValue as Record<string, unknown[]>;
+    return (arrVal.values || []).map(parseFirestoreValue);
+  }
+  if ("mapValue" in valObj) {
+    const obj: Record<string, unknown> = {};
+    const mapVal = valObj.mapValue as Record<string, Record<string, unknown>>;
+    const fields = mapVal.fields || {};
     for (const key in fields) {
       obj[key] = parseFirestoreValue(fields[key]);
     }
     return obj;
   }
-  if ("nullValue" in value) return null;
+  if ("nullValue" in valObj) return null;
   return value;
 }
 
@@ -83,7 +91,7 @@ export async function getAuditFromFirestore(id: string): Promise<StoredAudit | n
     if (!data || !data.fields) return null;
 
     // Parse the REST response into our StoredAudit structure
-    const parsedData: any = {};
+    const parsedData: Record<string, unknown> = {};
     for (const key in data.fields) {
       parsedData[key] = parseFirestoreValue(data.fields[key]);
     }
@@ -92,32 +100,52 @@ export async function getAuditFromFirestore(id: string): Promise<StoredAudit | n
       id,
       ...parsedData
     } as StoredAudit;
-  } catch (error: any) {
-    console.warn("Firestore REST fetch failed. Fetching from fallback local storage.", error?.message);
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : "";
+    console.warn("Firestore REST fetch failed. Fetching from fallback local storage.", errMsg);
     const { fallbackGetAudit } = await import("./fallback");
     return fallbackGetAudit(id);
   }
 }
 
 export async function saveLead(auditId: string, email: string, name?: string, role?: string) {
-  if (!db) {
+  const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+  if (!projectId) {
     console.warn("Firebase not configured. Lead not saved.");
     return "mock-lead-id";
   }
 
-  const leadsRef = collection(db, "leads");
-  
   try {
-    const docRef = await addDoc(leadsRef, {
-      auditId,
-      email,
-      name: name || "",
-      role: role || "",
-      createdAt: serverTimestamp(),
+    // Use Firestore REST API to bypass Next.js Node.js gRPC hangs
+    const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/leads`;
+    
+    const body = {
+      fields: {
+        auditId: { stringValue: auditId },
+        email: { stringValue: email },
+        name: { stringValue: name || "" },
+        role: { stringValue: role || "" },
+        createdAt: { timestampValue: new Date().toISOString() }
+      }
+    };
+
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
     });
-    return docRef.id;
-  } catch (error: any) {
-    console.warn("Firebase write failed for lead. Returning mock ID.", error?.message);
+
+    if (!res.ok) {
+      throw new Error(`REST API returned ${res.status}`);
+    }
+
+    const data = await res.json();
+    // The response includes the generated name like projects/.../documents/leads/someId
+    const parts = data.name ? data.name.split('/') : [];
+    return parts[parts.length - 1] || "mock-lead-id";
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : "";
+    console.warn("Firebase write failed for lead via REST. Returning mock ID.", errMsg);
     return "mock-lead-id";
   }
 }

@@ -5,10 +5,10 @@ import path from "path";
 
 const getFallbackPath = () => path.join(process.cwd(), ".next", "fallback_db.json");
 
-export async function serverFallbackSave(id: string, data: any) {
+export async function serverFallbackSave(id: string, data: unknown) {
   try {
     const dbPath = getFallbackPath();
-    let db: Record<string, any> = {};
+    let db: Record<string, unknown> = {};
     if (fs.existsSync(dbPath)) {
       db = JSON.parse(fs.readFileSync(dbPath, "utf-8"));
     }

@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { GlassCard } from "../shared/GlassCard";
 import { GlowButton } from "../shared/GlowButton";
-import { saveLead } from "@/lib/firebase/firestore";
 import { Send, CheckCircle2 } from "lucide-react";
+import { toast } from "sonner";
 
 interface Props {
   auditId: string;
@@ -20,14 +20,37 @@ export function LeadCapture({ auditId, totalSavings }: Props) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (honey) return; // Ignore bots filling honeypot
+    
+    // If honeypot is filled, simulate success silently to fool bots (or aggressive autofill)
+    if (honey) {
+      setStatus("success");
+      toast.success("Audit delivered successfully!");
+      return;
+    }
     
     setStatus("loading");
     try {
-      await saveLead(auditId, email, name, role);
+      const res = await fetch("/api/send-audit-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ auditId, email, name, role, honey }),
+      });
+      
+      const data = await res.json();
+      
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Failed to submit request.");
+      }
+      
       setStatus("success");
-    } catch {
+      setEmail("");
+      setName("");
+      setRole("");
+      toast.success("Audit delivered successfully!");
+    } catch (error) {
       setStatus("error");
+      const message = error instanceof Error ? error.message : "Something went wrong. Please try again.";
+      toast.error(message);
     }
   };
 
@@ -39,8 +62,8 @@ export function LeadCapture({ auditId, totalSavings }: Props) {
         <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mb-4">
           <CheckCircle2 className="w-8 h-8 text-emerald-500" />
         </div>
-        <h3 className="text-2xl font-bold text-foreground mb-2">Request Received</h3>
-        <p className="text-muted-foreground">We&apos;ve saved your details. You&apos;ll hear from us shortly.</p>
+        <h3 className="text-2xl font-bold text-foreground mb-2">Audit Delivered</h3>
+        <p className="text-muted-foreground">We&apos;ve sent the complete report to your inbox. You&apos;ll hear from us shortly.</p>
       </GlassCard>
     );
   }
@@ -65,7 +88,7 @@ export function LeadCapture({ auditId, totalSavings }: Props) {
         {/* Honeypot field - hidden from users but visible to bots */}
         <input
           type="text"
-          name="address"
+          name="bot_trap_field"
           value={honey}
           onChange={(e) => setHoney(e.target.value)}
           className="opacity-0 absolute -left-[9999px] top-0"
