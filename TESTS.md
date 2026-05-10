@@ -50,3 +50,19 @@ This document outlines the testing architecture and critical test cases for Stac
 ### 3. Future Automated Test Implementation
 - Implement unit tests for `runAuditEngine` and `generateRecommendations` using **Vitest** or **Jest**.
 - Implement E2E flows using **Playwright** or **Cypress** to verify the complete user journey from Landing Page -> Audit Builder -> Results Page.
+
+### 4. Backend & Persistence Testing
+
+- Verify Firebase audit documents are created successfully after report generation.
+- Verify lead capture documents are stored correctly in Firestore.
+- Verify public reports render correctly using dynamic route IDs.
+- Verify transactional email requests return successful API responses.
+- Verify invalid audit IDs gracefully show a “Report Not Found” state.
+
+### 5. Planned CI Coverage
+
+Planned GitHub Actions workflow:
+- lint checks
+- TypeScript checks
+- audit-engine unit tests
+- route validation tests

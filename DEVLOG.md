@@ -67,3 +67,37 @@
 **Reason:**
 
 * Had a university examination and was out of town, so I could not work on the project today.
+
+
+## Day 4 — 2026-05-10
+
+**Hours worked:** 5
+
+**What I did:**
+
+* Integrated Firebase Firestore persistence for audit reports and lead capture
+* Implemented dynamic public audit result pages using unique IDs
+* Added shareable report URLs with copy-link functionality
+* Connected the “Send Audit to Inbox” flow to a backend email delivery system
+* Implemented transactional email delivery using Nodemailer
+* Stored captured leads in Firebase with audit references
+* Added AI-generated personalized audit summaries with fallback handling
+* Improved results page hierarchy, recommendation presentation, and sharing UX
+* Added lightweight abuse prevention and improved async error handling
+
+**What I learned:**
+
+* Separating deterministic financial logic from AI-generated narrative summaries creates a significantly more trustworthy user experience.
+* Building public sharing and transactional flows makes the product feel much closer to a real SaaS MVP.
+
+**Blockers / what I'm stuck on:**
+
+* Initially attempted to use Resend for transactional email delivery, but encountered integration and configuration issues during development. Switched to Nodemailer to avoid blocking overall product progress and keep the email workflow functional.
+* Need more comprehensive automated testing coverage for the audit engine and API routes.
+
+**Plan for tomorrow:**
+
+* Add automated tests for audit calculations and recommendation rules
+* Setup GitHub Actions CI workflow
+* Expand pricing coverage for remaining vendors
+* Improve Lighthouse performance and mobile responsiveness

@@ -3,22 +3,26 @@
 ## Stack
 
 ### Frontend
-- Next.js 15 App Router
-- TypeScript
-- Tailwind CSS
-- shadcn/ui
-- Framer Motion
+
+* Next.js 15 App Router
+* TypeScript
+* Tailwind CSS
+* shadcn/ui
+* Framer Motion
 
 ### Form + Validation
-- React Hook Form
-- Zod
 
-### Planned Backend
-- Supabase
-- Resend
+* React Hook Form
+* Zod
+
+### Backend
+
+* Firebase Firestore
+* Nodemailer
 
 ### AI
-- GEMINI API
+
+* Gemini API (planned for narrative summaries only)
 
 ---
 
@@ -36,6 +40,14 @@ Savings Calculations
 ↓
 Recommendation Generator
 ↓
+Firebase Audit Persistence
+↓
+Dynamic Public Report URL
+↓
+Lead Capture
+↓
+Transactional Email Delivery
+↓
 Results Rendering
 
 ---
@@ -46,11 +58,13 @@ Pricing data is stored as normalized configuration objects inside:
 
 src/data/pricing/
 
-This allows:
-- dynamic plan rendering
-- scalable vendor support
-- deterministic calculations
-- centralized pricing management
+This architecture enables:
+
+* dynamic plan rendering
+* scalable vendor support
+* deterministic calculations
+* centralized pricing management
+* reusable pricing logic
 
 ---
 
@@ -59,12 +73,44 @@ This allows:
 The audit engine intentionally avoids using AI for financial calculations.
 
 Recommendations are:
-- rule-based
-- deterministic
-- explainable
-- financially defensible
 
-AI is reserved only for personalized narrative summaries later in the product flow.
+* deterministic
+* rule-based
+* explainable
+* financially defensible
+
+This ensures:
+
+* predictable outputs
+* transparent savings logic
+* trustworthy recommendations
+
+AI is reserved only for personalized narrative summaries.
+
+---
+
+# Persistence Layer
+
+Firebase Firestore stores:
+
+* audit reports
+* optimization recommendations
+* lead capture submissions
+
+Public audit reports are accessible using unique shareable URLs while excluding sensitive lead information.
+
+---
+
+# Email Delivery
+
+Transactional email delivery is implemented using Nodemailer.
+
+This approach was chosen because:
+
+* lightweight integration
+* rapid MVP setup
+* full template control
+* reduced external dependency friction during development
 
 ---
 
@@ -72,8 +118,9 @@ AI is reserved only for personalized narrative summaries later in the product fl
 
 If scaled to 10k+ audits/day:
 
-- move audit execution into server-side processing
-- cache pricing configuration
-- add Redis rate limiting
-- use database-backed audit persistence
-- generate async OG images
+* move audit execution to server-side jobs
+* cache pricing configuration
+* add Redis-based rate limiting
+* optimize Firestore indexing
+* generate async OG images
+* queue email delivery jobs
