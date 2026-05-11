@@ -22,6 +22,10 @@ Users can analyze their AI stack, detect duplicate subscriptions, optimize seat 
 * Copy-link sharing UX
 * Local storage persistence
 * Responsive premium UI
+* Complete pricing coverage for required AI vendors
+* Automated audit engine test suite
+* GitHub Actions CI pipeline
+* Deterministic financial validation coverage
 
 ---
 
@@ -36,6 +40,8 @@ Users can analyze their AI stack, detect duplicate subscriptions, optimize seat 
 * Zod
 * Firebase Firestore
 * Nodemailer
+* Vitest
+* GitHub Actions
 
 ---
 

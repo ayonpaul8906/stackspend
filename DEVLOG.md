@@ -101,3 +101,39 @@
 * Setup GitHub Actions CI workflow
 * Expand pricing coverage for remaining vendors
 * Improve Lighthouse performance and mobile responsiveness
+
+## Day 5 — 2026-05-11
+
+**Hours worked:** 3.5
+
+**What I did:**
+
+* Added complete pricing coverage for all required AI vendors and subscription plans
+* Configured Vitest testing setup for the audit engine
+* Implemented automated unit tests for:
+
+  * downgrade recommendations
+  * duplicate tooling detection
+  * annual savings calculations
+  * optimized stack handling
+  * invalid input handling
+* Added calculation validation tests and edge-case coverage
+* Configured GitHub Actions CI workflow to automatically run linting and tests on every push
+* Improved audit engine reliability and deterministic validation coverage
+
+**What I learned:**
+
+* Structuring deterministic financial logic into isolated rule-based functions made automated testing significantly easier and more reliable.
+* CI pipelines immediately exposed smaller TypeScript and linting inconsistencies that were easy to miss during manual development.
+
+**Blockers / what I'm stuck on:**
+
+* Need additional polish for mobile responsiveness, loading states, and Lighthouse optimization before final submission.
+* Some Framer Motion interactions still need optimization for lower-end mobile devices.
+
+**Plan for tomorrow:**
+
+* Improve Lighthouse performance and accessibility
+* Add polished error states and loading states
+* Refine mobile responsiveness and spacing consistency
+* Improve screenshot quality and final UX polish

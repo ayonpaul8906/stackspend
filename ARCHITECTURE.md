@@ -124,3 +124,16 @@ If scaled to 10k+ audits/day:
 * optimize Firestore indexing
 * generate async OG images
 * queue email delivery jobs
+
+# Reliability & CI
+
+The project includes:
+- automated audit engine testing using Vitest
+- deterministic financial validation tests
+- GitHub Actions CI workflow
+
+CI automatically runs:
+- lint checks
+- audit engine tests
+
+on every push and pull request to ensure reliability and prevent regression issues.

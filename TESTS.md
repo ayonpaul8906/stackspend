@@ -66,3 +66,38 @@ Planned GitHub Actions workflow:
 - TypeScript checks
 - audit-engine unit tests
 - route validation tests
+
+
+## Current Automated Test Coverage
+
+### Passing Test Count
+- 10 passing automated tests
+
+### Coverage Areas
+
+#### Audit Rules
+- ChatGPT Business downgrade logic
+- Claude Team overkill detection
+- Duplicate tooling detection
+- Optimized stack detection
+
+#### Financial Calculations
+- Monthly savings calculations
+- Annual savings calculations
+- Optimization score calculations
+- Zero-savings edge cases
+
+#### Reliability & Validation
+- Missing pricing data handling
+- Invalid seat count handling
+- Malformed audit input handling
+
+---
+
+## CI Integration
+
+GitHub Actions automatically runs:
+- lint checks
+- audit engine tests
+
+on every push and pull request to the `main` branch.
