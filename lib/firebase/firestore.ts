@@ -1,5 +1,5 @@
 import { db } from "./client";
-import { collection, addDoc, doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { AuditResult } from "@/lib/audit-engine";
 import { AuditFormState } from "@/types/audit";
 

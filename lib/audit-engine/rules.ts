@@ -3,11 +3,22 @@ import { AuditRecommendation } from "./types";
 
 export function generateRecommendations(state: AuditFormState): AuditRecommendation[] {
   const recommendations: AuditRecommendation[] = [];
-  const tools = state.tools;
+  const tools = state?.tools;
+
+  if (!Array.isArray(tools)) {
+    return recommendations;
+  }
+
+  // Sanitize tools to ensure missing or invalid numbers are handled
+  const validTools = tools.map(t => ({
+    ...t,
+    seats: typeof t.seats === 'number' && t.seats > 0 ? t.seats : 1,
+    monthlySpend: typeof t.monthlySpend === 'number' && t.monthlySpend >= 0 ? t.monthlySpend : 0
+  }));
 
   // Track if we have overlapping writing/research tools
-  const writingTools = tools.filter(t => 
-    ["ChatGPT", "Claude", "Gemini", "chatgpt-plus", "chatgpt-business", "claude-pro", "claude-team"].some(k => t.tool.toLowerCase().includes(k.toLowerCase()) || t.plan.toLowerCase().includes(k.toLowerCase()))
+  const writingTools = validTools.filter(t => 
+    ["ChatGPT", "Claude", "Gemini", "chatgpt-plus", "chatgpt-business", "claude-pro", "claude-team"].some(k => t.tool?.toLowerCase().includes(k.toLowerCase()) || t.plan?.toLowerCase().includes(k.toLowerCase()))
   );
 
   // Rule C: Multiple overlapping writing/research tools
@@ -32,14 +43,14 @@ export function generateRecommendations(state: AuditFormState): AuditRecommendat
   }
 
   // Iterate over each tool for specific rules
-  for (const tool of tools) {
+  for (const tool of validTools) {
     // Skip if we already recommended consolidating this tool
     if (recommendations.some(r => r.tool === tool.tool && r.action === "consolidate")) {
       continue;
     }
 
-    const toolNameLower = tool.tool.toLowerCase();
-    const planIdLower = tool.plan.toLowerCase();
+    const toolNameLower = tool.tool?.toLowerCase() || "";
+    const planIdLower = tool.plan?.toLowerCase() || "";
     
     // Rule A: ChatGPT Business with <= 2 seats -> Recommend Plus
     if (toolNameLower.includes("chatgpt") && planIdLower.includes("business") && tool.seats <= 2) {
