@@ -25,12 +25,33 @@ export function ToolCard({ index, onRemove }: ToolCardProps) {
   // Get matching plans for the selected tool
   const matchingPlans = useMemo(() => {
     if (!selectedTool) return [];
-    const normalizedTool = selectedTool.toLowerCase().replace(/\s+/g, '');
-    return pricingDatabase.filter(p => 
-      p.id.includes(normalizedTool) || 
-      p.name.toLowerCase().includes(selectedTool.toLowerCase()) ||
-      p.vendor.toLowerCase().includes(selectedTool.toLowerCase())
-    );
+    
+    const toolLower = selectedTool.toLowerCase();
+    const normalizedTool = toolLower.replace(/\s+/g, '');
+    const hyphenatedTool = toolLower.replace(/\s+/g, '-');
+    
+    return pricingDatabase.filter(p => {
+      // Direct matches
+      if (
+        p.id.includes(normalizedTool) || 
+        p.id.includes(hyphenatedTool) ||
+        p.name.toLowerCase().includes(toolLower) ||
+        p.vendor.toLowerCase().includes(toolLower)
+      ) {
+        return true;
+      }
+      
+      // Special case for API tools (like OpenAI API, Anthropic API)
+      if (toolLower === "openai api" && p.vendor === "OpenAI" && !p.id.includes("chatgpt")) {
+        return true;
+      }
+      
+      if (toolLower === "anthropic api" && p.vendor === "Anthropic" && !p.id.includes("claude")) {
+        return true;
+      }
+      
+      return false;
+    });
   }, [selectedTool]);
 
   // Handle plan change to auto-update spend
@@ -121,7 +142,7 @@ export function ToolCard({ index, onRemove }: ToolCardProps) {
                 <option value="">{matchingPlans.length > 0 ? "Choose a plan..." : "Select tool first"}</option>
                 {matchingPlans.map(p => (
                   <option key={p.id} value={p.id}>
-                    {p.name} (${p.monthlyPrice}/mo)
+                    {p.name} {p.monthlyPrice != null ? `($${p.monthlyPrice}/mo)` : "(Variable/Custom)"}
                   </option>
                 ))}
                 <option value="custom">Custom / Other</option>

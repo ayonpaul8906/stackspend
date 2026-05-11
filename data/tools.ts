@@ -5,6 +5,5 @@ export const tools = [
   "GitHub Copilot",
   "Gemini",
   "OpenAI API",
-  "Anthropic API",
   "Windsurf",
 ];

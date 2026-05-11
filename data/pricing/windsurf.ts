@@ -1,0 +1,146 @@
+import { PricingPlan } from "@/types/pricing";
+
+export const windsurfPlans: PricingPlan[] = [
+  {
+    id: "windsurf-free",
+    name: "Windsurf Free",
+    vendor: "Windsurf",
+    type: "personal",
+    monthlyPrice: 0,
+    minimumSeats: 1,
+    recommendedTeamSize: {
+      min: 1,
+    },
+    useCases: [
+      "learning",
+      "casual-coding",
+      "trying-windsurf",
+    ],
+    features: [
+      "light-cascade-usage",
+      "unlimited-tab-completions",
+      "all-premium-models",
+      "previews",
+      "deploys",
+    ],
+    officialUrl: "https://windsurf.com/pricing",
+    verifiedAt: "2026-05-11",
+  },
+
+  {
+    id: "windsurf-pro",
+    name: "Windsurf Pro",
+    vendor: "Windsurf",
+    type: "personal",
+    monthlyPrice: 20,
+    minimumSeats: 1,
+    recommendedTeamSize: {
+      min: 1,
+    },
+    useCases: [
+      "daily-development",
+      "professional-coding",
+      "ai-assisted-programming",
+    ],
+    features: [
+      "standard-usage-allowance",
+      "api-priced-overages",
+      "unlimited-tab-completions",
+      "all-premium-models",
+      "fast-context",
+      "swe-1-5-model",
+      "previews",
+      "deploys",
+    ],
+    officialUrl: "https://windsurf.com/pricing",
+    verifiedAt: "2026-05-11",
+  },
+
+  {
+    id: "windsurf-max",
+    name: "Windsurf Max",
+    vendor: "Windsurf",
+    type: "power-user",
+    monthlyPrice: 200,
+    minimumSeats: 1,
+    recommendedTeamSize: {
+      min: 1,
+    },
+    useCases: [
+      "heavy-ai-coding",
+      "agentic-development",
+      "high-volume-cascade-usage",
+    ],
+    features: [
+      "heavy-usage-allowance",
+      "api-priced-overages",
+      "unlimited-tab-completions",
+      "all-premium-models",
+      "fast-context",
+      "swe-1-5-model",
+      "priority-usage",
+    ],
+    officialUrl: "https://windsurf.com/pricing",
+    verifiedAt: "2026-05-11",
+  },
+
+  {
+    id: "windsurf-teams",
+    name: "Windsurf Teams",
+    vendor: "Windsurf",
+    type: "business",
+    monthlyPrice: 40,
+    minimumSeats: 2,
+    recommendedTeamSize: {
+      min: 2,
+    },
+    useCases: [
+      "engineering-teams",
+      "team-collaboration",
+      "shared-development-workflows",
+    ],
+    features: [
+      "standard-team-usage",
+      "centralized-billing",
+      "admin-dashboard",
+      "analytics",
+      "priority-support",
+      "knowledge-base",
+      "sso-and-access-controls",
+      "all-premium-models",
+      "unlimited-tab-completions",
+    ],
+    officialUrl: "https://windsurf.com/pricing",
+    verifiedAt: "2026-05-11",
+  },
+
+  {
+    id: "windsurf-enterprise",
+    name: "Windsurf Enterprise",
+    vendor: "Windsurf",
+    type: "enterprise",
+    monthlyPrice: null,
+    pricingModel: "custom",
+    minimumSeats: null,
+    recommendedTeamSize: {
+      min: 50,
+    },
+    useCases: [
+      "large-organizations",
+      "enterprise-development",
+      "secure-ai-coding",
+    ],
+    features: [
+      "custom-usage",
+      "rbac",
+      "volume-discounts",
+      "hybrid-deployment",
+      "account-management",
+      "sso-and-access-controls",
+      "admin-dashboard",
+      "priority-support",
+    ],
+    officialUrl: "https://windsurf.com/pricing",
+    verifiedAt: "2026-05-11",
+  },
+];

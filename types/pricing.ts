@@ -4,7 +4,14 @@ export type PlanType =
   | "team"
   | "business"
   | "enterprise"
-  | "api";
+  | "api"
+  | "api-model"
+  | "realtime-api"
+  | "speech-to-text-api"
+  | "image-api"
+  | "api-feature"
+  | "education"
+  | "power-user";
 
 export type UseCase =
   | "coding"
@@ -20,16 +27,41 @@ export interface PricingPlan {
 
   type: PlanType;
 
-  monthlyPrice: number;
+  pricingModel?: string;
 
-  minimumSeats?: number;
+  monthlyPrice: number | null;
+  introductoryMonthlyPrice?: number;
+  introductoryDurationMonths?: number;
+  trialPrice?: number;
+  trialDurationMonths?: number;
+  currency?: string;
+
+  pricing?: {
+    inputPer1MTokens?: number;
+    cachedInputPer1MTokens?: number;
+    outputPer1MTokens?: number;
+    textInputPer1MTokens?: number;
+    textCachedInputPer1MTokens?: number;
+    textOutputPer1MTokens?: number;
+    audioInputPer1MTokens?: number;
+    audioCachedInputPer1MTokens?: number;
+    audioOutputPer1MTokens?: number;
+    imageInputPer1MTokens?: number;
+    imageCachedInputPer1MTokens?: number;
+    imageOutputPer1MTokens?: number;
+    perMinute?: number;
+    perSecond?: number;
+    currency?: string;
+  };
+
+  minimumSeats?: number | null;
 
   recommendedTeamSize?: {
     min: number;
     max?: number;
   };
 
-  useCases: UseCase[];
+  useCases: string[];
 
   features: string[];
 

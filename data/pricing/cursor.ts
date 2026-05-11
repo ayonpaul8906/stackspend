@@ -1,0 +1,247 @@
+import { PricingPlan } from "@/types/pricing";
+
+export const cursorPlans: PricingPlan[] = [
+  {
+    id: "cursor-hobby",
+    name: "Cursor Hobby",
+    vendor: "Cursor",
+    type: "personal",
+    monthlyPrice: 0,
+    minimumSeats: 1,
+    recommendedTeamSize: {
+      min: 1,
+    },
+    useCases: [
+      "learning",
+      "casual-coding",
+      "trying-cursor",
+    ],
+    features: [
+      "limited-agent-requests",
+      "limited-tab-completions",
+      "no-credit-card-required",
+    ],
+    officialUrl: "https://cursor.com/pricing",
+    verifiedAt: "2026-05-11",
+  },
+
+  {
+    id: "cursor-pro",
+    name: "Cursor Pro",
+    vendor: "Cursor",
+    type: "personal",
+    monthlyPrice: 20,
+    minimumSeats: 1,
+    recommendedTeamSize: {
+      min: 1,
+    },
+    useCases: [
+      "daily-development",
+      "coding",
+      "ai-assisted-programming",
+      "professional-developers",
+    ],
+    features: [
+      "extended-agent-limits",
+      "frontier-model-access",
+      "mcps",
+      "skills-and-hooks",
+      "cloud-agents",
+    ],
+    officialUrl: "https://cursor.com/pricing",
+    verifiedAt: "2026-05-11",
+  },
+
+  {
+    id: "cursor-pro-plus",
+    name: "Cursor Pro+",
+    vendor: "Cursor",
+    type: "power-user",
+    monthlyPrice: 60,
+    minimumSeats: 1,
+    recommendedTeamSize: {
+      min: 1,
+    },
+    useCases: [
+      "heavy-ai-coding",
+      "advanced-development",
+      "high-volume-agent-usage",
+    ],
+    features: [
+      "everything-in-pro",
+      "3x-usage-on-openai-models",
+      "3x-usage-on-claude-models",
+      "3x-usage-on-gemini-models",
+    ],
+    officialUrl: "https://cursor.com/pricing",
+    verifiedAt: "2026-05-11",
+  },
+
+  {
+    id: "cursor-ultra",
+    name: "Cursor Ultra",
+    vendor: "Cursor",
+    type: "power-user",
+    monthlyPrice: 200,
+    minimumSeats: 1,
+    recommendedTeamSize: {
+      min: 1,
+    },
+    useCases: [
+      "extreme-ai-workloads",
+      "agentic-development",
+      "full-time-ai-coding",
+    ],
+    features: [
+      "everything-in-pro",
+      "20x-usage-on-openai-models",
+      "20x-usage-on-claude-models",
+      "20x-usage-on-gemini-models",
+      "priority-access-to-new-features",
+    ],
+    officialUrl: "https://cursor.com/pricing",
+    verifiedAt: "2026-05-11",
+  },
+
+  {
+    id: "cursor-teams",
+    name: "Cursor Teams",
+    vendor: "Cursor",
+    type: "business",
+    monthlyPrice: 40,
+    minimumSeats: 2,
+    recommendedTeamSize: {
+      min: 2,
+    },
+    useCases: [
+      "team-collaboration",
+      "engineering-teams",
+      "shared-development-workflows",
+    ],
+    features: [
+      "everything-in-pro",
+      "shared-chats",
+      "shared-commands",
+      "shared-rules",
+      "centralized-billing",
+      "usage-analytics",
+      "reporting",
+      "privacy-mode-controls",
+      "role-based-access-control",
+      "saml-oidc-sso",
+    ],
+    officialUrl: "https://cursor.com/pricing",
+    verifiedAt: "2026-05-11",
+  },
+
+  {
+    id: "cursor-enterprise",
+    name: "Cursor Enterprise",
+    vendor: "Cursor",
+    type: "enterprise",
+    monthlyPrice: null,
+    pricingModel: "custom",
+    minimumSeats: null,
+    recommendedTeamSize: {
+      min: 50,
+    },
+    useCases: [
+      "large-organizations",
+      "enterprise-development",
+      "secure-ai-coding",
+    ],
+    features: [
+      "everything-in-teams",
+      "pooled-usage",
+      "invoice-billing",
+      "po-billing",
+      "scim-seat-management",
+      "audit-logs",
+      "ai-code-tracking-api",
+      "granular-admin-controls",
+      "model-controls",
+      "priority-support",
+      "account-management",
+    ],
+    officialUrl: "https://cursor.com/pricing",
+    verifiedAt: "2026-05-11",
+  },
+
+  {
+    id: "cursor-bugbot-pro",
+    name: "Cursor Bugbot Pro",
+    vendor: "Cursor",
+    type: "business",
+    monthlyPrice: 40,
+    minimumSeats: 1,
+    recommendedTeamSize: {
+      min: 1,
+    },
+    useCases: [
+      "pull-request-review",
+      "automated-code-review",
+      "bug-detection",
+    ],
+    features: [
+      "reviews-up-to-200-prs-monthly",
+      "bugbot-rules",
+      "14-day-trial",
+    ],
+    officialUrl: "https://cursor.com/pricing",
+    verifiedAt: "2026-05-11",
+  },
+
+  {
+    id: "cursor-bugbot-teams",
+    name: "Cursor Bugbot Teams",
+    vendor: "Cursor",
+    type: "business",
+    monthlyPrice: 40,
+    minimumSeats: 2,
+    recommendedTeamSize: {
+      min: 2,
+    },
+    useCases: [
+      "team-code-review",
+      "organization-pr-review",
+      "engineering-quality-control",
+    ],
+    features: [
+      "everything-in-bugbot-pro",
+      "reviews-on-all-prs",
+      "analytics-dashboard",
+      "advanced-rules",
+      "advanced-settings",
+      "14-day-team-trial",
+    ],
+    officialUrl: "https://cursor.com/pricing",
+    verifiedAt: "2026-05-11",
+  },
+
+  {
+    id: "cursor-bugbot-enterprise",
+    name: "Cursor Bugbot Enterprise",
+    vendor: "Cursor",
+    type: "enterprise",
+    monthlyPrice: null,
+    pricingModel: "custom",
+    minimumSeats: null,
+    recommendedTeamSize: {
+      min: 50,
+    },
+    useCases: [
+      "enterprise-code-review",
+      "large-scale-pr-automation",
+      "enterprise-engineering-workflows",
+    ],
+    features: [
+      "advanced-analytics",
+      "reporting",
+      "priority-support",
+      "account-management",
+      "30-day-org-wide-trial",
+    ],
+    officialUrl: "https://cursor.com/pricing",
+    verifiedAt: "2026-05-11",
+  },
+];
