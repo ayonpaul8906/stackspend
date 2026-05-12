@@ -5,7 +5,7 @@ export const chatgptPlans: PricingPlan[] = [
     id: "chatgpt-free",
     name: "ChatGPT Free",
     vendor: "OpenAI",
-    type: "personal",
+    type: "free",
     monthlyPrice: 0,
     minimumSeats: 1,
     recommendedTeamSize: {
@@ -27,7 +27,7 @@ export const chatgptPlans: PricingPlan[] = [
     id: "chatgpt-plus",
     name: "ChatGPT Plus",
     vendor: "OpenAI",
-    type: "personal",
+    type: "individual",
     monthlyPrice: 20,
     minimumSeats: 1,
     recommendedTeamSize: {
@@ -82,7 +82,6 @@ export const chatgptPlans: PricingPlan[] = [
     vendor: "OpenAI",
     type: "business",
     monthlyPrice: 30,
-    annualMonthlyPrice: 25,
     minimumSeats: 2,
     recommendedTeamSize: {
       min: 2,

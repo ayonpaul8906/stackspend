@@ -11,9 +11,10 @@ import { ToolCard } from "./ToolCard";
 import { EmptyState } from "./EmptyState";
 import { AuditSidebar } from "./AuditSidebar";
 import { GlowButton } from "../shared/GlowButton";
-import { Plus, ArrowRight } from "lucide-react";
+import { Plus, ArrowRight, AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { runAuditEngine } from "@/lib/audit-engine";
+import { toast } from "sonner";
 
 export function AuditForm() {
   const router = useRouter();
@@ -35,9 +36,12 @@ export function AuditForm() {
   });
 
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [submitError, setSubmitError] = React.useState<string | null>(null);
 
   const onSubmit = async (data: AuditFormValues) => {
     setIsSubmitting(true);
+    setSubmitError(null);
+    
     try {
       // Run deterministic rules — all financial logic stays here
       const result = runAuditEngine(data);
@@ -55,9 +59,13 @@ export function AuditForm() {
       await saveAuditToFirestore(data, result, aiSummary, auditId);
       
       // Navigate to public shareable URL
+      toast.success("Audit generated successfully!");
       router.push(`/results/${auditId}`);
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to generate audit. Please try again.";
       console.error("Failed to submit audit:", error);
+      setSubmitError(errorMessage);
+      toast.error(errorMessage);
       setIsSubmitting(false);
     }
   };
@@ -82,6 +90,22 @@ export function AuditForm() {
         {/* Main Form Area */}
         <div className="flex-1 space-y-12 min-w-0">
           
+          {/* Error Alert */}
+          {submitError && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg flex gap-3 items-start"
+              role="alert"
+            >
+              <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="font-medium text-destructive">Error generating audit</p>
+                <p className="text-sm text-destructive/80">{submitError}</p>
+              </div>
+            </motion.div>
+          )}
+          
           <section>
             <div className="mb-4">
               <h2 className="text-2xl font-bold text-foreground">1. Organization Details</h2>
@@ -100,7 +124,8 @@ export function AuditForm() {
                 <button
                   type="button"
                   onClick={addTool}
-                  className="hidden md:flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                  className="hidden md:flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 rounded px-2 py-1"
+                  aria-label="Add another AI tool to the stack"
                 >
                   <Plus className="w-4 h-4" /> Add Another
                 </button>
@@ -128,7 +153,13 @@ export function AuditForm() {
                   animate={{ opacity: 1 }}
                   className="pt-4 flex justify-center md:hidden"
                 >
-                  <GlowButton type="button" variant="outline" onClick={addTool} className="w-full">
+                  <GlowButton 
+                    type="button" 
+                    variant="outline" 
+                    onClick={addTool} 
+                    className="w-full"
+                    aria-label="Add another AI tool to the stack"
+                  >
                     <Plus className="w-4 h-4 mr-2" /> Add Another Tool
                   </GlowButton>
                 </motion.div>
@@ -136,15 +167,25 @@ export function AuditForm() {
             </div>
           </section>
 
-          <div className="pt-8 border-t border-border flex justify-end">
+          <div className="pt-8 border-t border-border flex justify-end gap-3">
             <GlowButton 
               type="submit" 
               size="lg" 
               disabled={fields.length === 0 || isSubmitting}
               className="w-full sm:w-auto"
+              aria-busy={isSubmitting}
             >
-              {isSubmitting ? "Analyzing Stack..." : "Generate Audit Report"}
-              {!isSubmitting && <ArrowRight className="w-5 h-5 ml-2" />}
+              {isSubmitting ? (
+                <>
+                  <span className="inline-block animate-spin mr-2">⏳</span>
+                  Analyzing Stack...
+                </>
+              ) : (
+                <>
+                  Generate Audit Report
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </>
+              )}
             </GlowButton>
           </div>
         </div>

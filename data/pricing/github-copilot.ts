@@ -5,7 +5,7 @@ export const githubCopilotPlans: PricingPlan[] = [
     id: "github-copilot-free",
     name: "GitHub Copilot Free",
     vendor: "GitHub",
-    type: "personal",
+    type: "free",
     monthlyPrice: 0,
     minimumSeats: 1,
     recommendedTeamSize: {
@@ -34,7 +34,7 @@ export const githubCopilotPlans: PricingPlan[] = [
     id: "github-copilot-pro",
     name: "GitHub Copilot Pro",
     vendor: "GitHub",
-    type: "personal",
+    type: "individual",
     monthlyPrice: 10,
     minimumSeats: 1,
     recommendedTeamSize: {

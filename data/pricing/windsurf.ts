@@ -5,7 +5,7 @@ export const windsurfPlans: PricingPlan[] = [
     id: "windsurf-free",
     name: "Windsurf Free",
     vendor: "Windsurf",
-    type: "personal",
+    type: "free",
     monthlyPrice: 0,
     minimumSeats: 1,
     recommendedTeamSize: {
@@ -31,7 +31,7 @@ export const windsurfPlans: PricingPlan[] = [
     id: "windsurf-pro",
     name: "Windsurf Pro",
     vendor: "Windsurf",
-    type: "personal",
+    type: "individual",
     monthlyPrice: 20,
     minimumSeats: 1,
     recommendedTeamSize: {

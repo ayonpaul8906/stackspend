@@ -60,7 +60,7 @@ export function ToolCard({ index, onRemove }: ToolCardProps) {
     setValue(`tools.${index}.plan`, planId, { shouldValidate: true });
     
     const plan = matchingPlans.find(p => p.id === planId);
-    if (plan) {
+    if (plan && plan.monthlyPrice != null) {
       const minSeats = plan.minimumSeats || 1;
       const currentSeats = seats || 1;
       const actualSeats = Math.max(minSeats, currentSeats);
@@ -74,7 +74,7 @@ export function ToolCard({ index, onRemove }: ToolCardProps) {
   useEffect(() => {
     if (selectedPlanId && seats) {
       const plan = matchingPlans.find(p => p.id === selectedPlanId);
-      if (plan) {
+      if (plan && plan.monthlyPrice != null) {
         setValue(`tools.${index}.monthlySpend`, seats * plan.monthlyPrice, { shouldValidate: true });
       }
     }

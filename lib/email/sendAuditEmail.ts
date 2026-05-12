@@ -1,10 +1,10 @@
 import nodemailer from "nodemailer";
-import { AuditResult } from "../audit-engine";
+import { StoredAudit } from "../firebase/firestore";
 
 interface SendAuditParams {
   email: string;
   auditId: string;
-  result: AuditResult;
+  result: StoredAudit;
 }
 
 // Create a nodemailer transporter

@@ -7,7 +7,7 @@ export interface StoredAudit extends AuditResult {
   id: string;
   formState: AuditFormState;
   aiSummary: string;
-  createdAt: unknown;
+  createdAt?: unknown;
 }
 
 export async function saveAuditToFirestore(

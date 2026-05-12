@@ -5,7 +5,7 @@ export const cursorPlans: PricingPlan[] = [
     id: "cursor-hobby",
     name: "Cursor Hobby",
     vendor: "Cursor",
-    type: "personal",
+    type: "free",
     monthlyPrice: 0,
     minimumSeats: 1,
     recommendedTeamSize: {
@@ -29,7 +29,7 @@ export const cursorPlans: PricingPlan[] = [
     id: "cursor-pro",
     name: "Cursor Pro",
     vendor: "Cursor",
-    type: "personal",
+    type: "individual",
     monthlyPrice: 20,
     minimumSeats: 1,
     recommendedTeamSize: {

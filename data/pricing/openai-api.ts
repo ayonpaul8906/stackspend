@@ -43,6 +43,7 @@ export const openaiApiPlans: PricingPlan[] = [
     name: "GPT-5.5 API",
     vendor: "OpenAI",
     type: "api-model",
+    monthlyPrice: null,
     pricing: {
       inputPer1MTokens: 5,
       cachedInputPer1MTokens: 0.5,
@@ -55,6 +56,12 @@ export const openaiApiPlans: PricingPlan[] = [
       "agentic-workflows",
       "professional-ai-apps",
     ],
+    features: [
+      "token-based-pricing",
+      "reasoning",
+      "high-context",
+      "advanced-performance",
+    ],
     officialUrl: "https://openai.com/api/pricing/",
     verifiedAt: "2026-05-11",
   },
@@ -64,6 +71,7 @@ export const openaiApiPlans: PricingPlan[] = [
     name: "GPT-5.4 API",
     vendor: "OpenAI",
     type: "api-model",
+    monthlyPrice: null,
     pricing: {
       inputPer1MTokens: 2.5,
       cachedInputPer1MTokens: 0.25,
@@ -75,6 +83,11 @@ export const openaiApiPlans: PricingPlan[] = [
       "professional-workflows",
       "automation",
     ],
+    features: [
+      "token-based-pricing",
+      "cost-effective",
+      "professional-performance",
+    ],
     officialUrl: "https://openai.com/api/pricing/",
     verifiedAt: "2026-05-11",
   },
@@ -84,6 +97,7 @@ export const openaiApiPlans: PricingPlan[] = [
     name: "GPT-5.4 Mini API",
     vendor: "OpenAI",
     type: "api-model",
+    monthlyPrice: null,
     pricing: {
       inputPer1MTokens: 0.75,
       cachedInputPer1MTokens: 0.075,
@@ -96,6 +110,11 @@ export const openaiApiPlans: PricingPlan[] = [
       "cost-efficient-ai",
       "lightweight-automation",
     ],
+    features: [
+      "token-based-pricing",
+      "lightweight",
+      "fast-performance",
+    ],
     officialUrl: "https://openai.com/api/pricing/",
     verifiedAt: "2026-05-11",
   },
@@ -105,6 +124,7 @@ export const openaiApiPlans: PricingPlan[] = [
     name: "GPT-Realtime-2 API",
     vendor: "OpenAI",
     type: "realtime-api",
+    monthlyPrice: null,
     pricing: {
       textInputPer1MTokens: 4,
       textCachedInputPer1MTokens: 0.4,
@@ -122,6 +142,11 @@ export const openaiApiPlans: PricingPlan[] = [
       "speech-applications",
       "multimodal-realtime-apps",
     ],
+    features: [
+      "realtime-api",
+      "voice-support",
+      "live-streaming",
+    ],
     officialUrl: "https://openai.com/api/pricing/",
     verifiedAt: "2026-05-11",
   },
@@ -131,6 +156,7 @@ export const openaiApiPlans: PricingPlan[] = [
     name: "GPT-Realtime-Translate API",
     vendor: "OpenAI",
     type: "realtime-api",
+    monthlyPrice: null,
     pricing: {
       perMinute: 0.034,
       perSecond: 0.00057,
@@ -141,6 +167,11 @@ export const openaiApiPlans: PricingPlan[] = [
       "multilingual-voice-apps",
       "real-time-interpretation",
     ],
+    features: [
+      "realtime-translation",
+      "multilingual",
+      "minute-based-pricing",
+    ],
     officialUrl: "https://openai.com/api/pricing/",
     verifiedAt: "2026-05-11",
   },
@@ -150,6 +181,7 @@ export const openaiApiPlans: PricingPlan[] = [
     name: "GPT-Realtime-Whisper API",
     vendor: "OpenAI",
     type: "speech-to-text-api",
+    monthlyPrice: null,
     pricing: {
       perMinute: 0.017,
       perSecond: 0.00028,
@@ -160,6 +192,11 @@ export const openaiApiPlans: PricingPlan[] = [
       "meeting-notes",
       "speech-to-text",
     ],
+    features: [
+      "speech-recognition",
+      "live-transcription",
+      "minute-based-pricing",
+    ],
     officialUrl: "https://openai.com/api/pricing/",
     verifiedAt: "2026-05-11",
   },
@@ -169,6 +206,7 @@ export const openaiApiPlans: PricingPlan[] = [
     name: "GPT-Image-2 API",
     vendor: "OpenAI",
     type: "image-api",
+    monthlyPrice: null,
     pricing: {
       textInputPer1MTokens: 5,
       textCachedInputPer1MTokens: 1.25,
@@ -182,6 +220,11 @@ export const openaiApiPlans: PricingPlan[] = [
       "image-editing",
       "creative-tools",
       "design-applications",
+    ],
+    features: [
+      "image-generation",
+      "image-processing",
+      "token-based-pricing",
     ],
     officialUrl: "https://openai.com/api/pricing/",
     verifiedAt: "2026-05-11",

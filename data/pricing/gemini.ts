@@ -5,7 +5,7 @@ export const geminiPlans: PricingPlan[] = [
     id: "gemini-free",
     name: "Google AI Free",
     vendor: "Google",
-    type: "personal",
+    type: "free",
     monthlyPrice: 0,
     minimumSeats: 1,
     recommendedTeamSize: {
@@ -37,7 +37,7 @@ export const geminiPlans: PricingPlan[] = [
     id: "google-ai-plus",
     name: "Google AI Plus",
     vendor: "Google",
-    type: "personal",
+    type: "individual",
     monthlyPrice: 399,
     introductoryMonthlyPrice: 199,
     introductoryDurationMonths: 6,

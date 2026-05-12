@@ -5,7 +5,7 @@ export const claudePlans: PricingPlan[] = [
     id: "claude-free",
     name: "Claude Free",
     vendor: "Anthropic",
-    type: "personal",
+    type: "free",
     monthlyPrice: 0,
     minimumSeats: 1,
     recommendedTeamSize: {
@@ -41,10 +41,8 @@ export const claudePlans: PricingPlan[] = [
     id: "claude-pro",
     name: "Claude Pro",
     vendor: "Anthropic",
-    type: "personal",
+    type: "individual",
     monthlyPrice: 20,
-    annualMonthlyPrice: 17,
-    annualBillingTotal: 200,
     minimumSeats: 1,
     recommendedTeamSize: {
       min: 1,
@@ -128,7 +126,6 @@ export const claudePlans: PricingPlan[] = [
     vendor: "Anthropic",
     type: "business",
     monthlyPrice: 25,
-    monthlyPriceIfMonthlyBilling: 30,
     minimumSeats: 5,
     recommendedTeamSize: {
       min: 5,
@@ -165,7 +162,6 @@ export const claudePlans: PricingPlan[] = [
     vendor: "Anthropic",
     type: "business",
     monthlyPrice: 100,
-    monthlyPriceIfMonthlyBilling: 125,
     minimumSeats: 5,
     recommendedTeamSize: {
       min: 5,

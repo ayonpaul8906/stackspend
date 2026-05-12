@@ -1,5 +1,5 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { initializeFirestore, getFirestore } from "firebase/firestore";
+import { initializeFirestore, getFirestore, Firestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -16,7 +16,7 @@ const app = (!firebaseConfig.projectId)
   : (getApps().length > 0 ? getApp() : initializeApp(firebaseConfig));
 
 // Initialize Firestore with long polling to prevent GRPC hang in Next.js Server Components
-let db: unknown = null;
+let db: Firestore | null = null;
 if (app) {
   try {
     db = initializeFirestore(app, { experimentalForceLongPolling: true });
