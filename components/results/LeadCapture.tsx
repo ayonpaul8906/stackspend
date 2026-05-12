@@ -21,7 +21,7 @@ export function LeadCapture({ auditId, totalSavings }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // If honeypot is filled, simulate success silently to fool bots (or aggressive autofill)
+    // If honeypot is filled, simulate success silently to fool bots
     if (honey) {
       setStatus("success");
       toast.success("Audit delivered successfully!");
@@ -30,17 +30,9 @@ export function LeadCapture({ auditId, totalSavings }: Props) {
     
     setStatus("loading");
     try {
-      const res = await fetch("/api/send-audit-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ auditId, email, name, role, honey }),
-      });
-      
-      const data = await res.json();
-      
-      if (!res.ok || !data.success) {
-        throw new Error(data.error || "Failed to submit request.");
-      }
+      // Call Flask backend — SMTP credentials never leave the Python server
+      const { sendAuditReportEmail, BackendApiError } = await import("@/lib/services/backendApi");
+      await sendAuditReportEmail({ auditId, email, name, role, honey });
       
       setStatus("success");
       setEmail("");
@@ -49,7 +41,13 @@ export function LeadCapture({ auditId, totalSavings }: Props) {
       toast.success("Audit delivered successfully!");
     } catch (error) {
       setStatus("error");
-      const message = error instanceof Error ? error.message : "Something went wrong. Please try again.";
+      const { BackendApiError } = await import("@/lib/services/backendApi");
+      const message =
+        error instanceof BackendApiError
+          ? error.message
+          : error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.";
       toast.error(message);
     }
   };

@@ -39,18 +39,18 @@ export function AuditForm() {
   const onSubmit = async (data: AuditFormValues) => {
     setIsSubmitting(true);
     try {
-      // Run deterministic rules
+      // Run deterministic rules — all financial logic stays here
       const result = runAuditEngine(data);
       
-      // Generate unique ID
+      // Generate unique ID before AI call so backend can persist the summary
       const auditId = crypto.randomUUID();
       
-      // Request AI summary from secure server action
-      // Import this dynamically or at the top of file
+      // Request AI narrative summary from Flask backend (via secure server action)
+      // Passes pre-calculated outputs only — no financial logic sent to AI
       const { generateSummaryAction } = await import("@/app/actions/audit");
-      const aiSummary = await generateSummaryAction(result, data);
+      const aiSummary = await generateSummaryAction(result, data, auditId);
       
-      // Save to Firestore
+      // Save full audit + summary to Firestore
       const { saveAuditToFirestore } = await import("@/lib/firebase/firestore");
       await saveAuditToFirestore(data, result, aiSummary, auditId);
       
