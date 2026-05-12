@@ -1,103 +1,311 @@
-# Testing Strategy & Scenarios
+# TESTS
 
-This document outlines the testing architecture and critical test cases for StackSpend. The focus is on ensuring the deterministic audit engine remains reliable, financially defensible, and free from AI-generated hallucinations.
+## Test Stack
 
-## Core Testing Principles
-
-1. **Deterministic Outcomes:** The audit engine must produce the exact same recommendations and savings calculations for identical inputs.
-2. **Financial Accuracy:** All math (monthly/annual savings, optimization scores) must be precise. 
-3. **Graceful Failures:** Missing pricing data or unusual inputs must safely fallback without crashing the engine.
-
-## Critical Test Scenarios
-
-### 1. Audit Engine Rules
-
-**Rule A: ChatGPT Business Seat Optimization**
-- **Input:** ChatGPT Business plan, 1-2 seats.
-- **Expected Output:** Recommend downgrade to ChatGPT Plus. Calculate savings of $5/mo per seat.
-- **Action Type:** `downgrade`
-- **Severity:** `team_overkill`
-
-**Rule B: Claude Team Minimum Seat Optimization**
-- **Input:** Claude Team plan, 2 active seats.
-- **Expected Output:** Recommend downgrade to Claude Pro. Flag the wasted spend resulting from the 5-seat minimum requirement.
-- **Action Type:** `downgrade`
-- **Severity:** `team_overkill`
-
-**Rule C: Overlapping Tool Consolidation**
-- **Input:** ChatGPT Plus, Claude Pro, and Gemini Advanced all assigned to overlapping "mixed" or "writing" use cases.
-- **Expected Output:** Recommend keeping the primary tool and consolidating/removing the others. Calculate savings equal to the total cost of removed tools.
-- **Action Type:** `consolidate`
-- **Severity:** `duplicate_spend`
-
-**Rule D: Expensive Plan / Low Seat Count Flag**
-- **Input:** Any tool with a spend-to-seat ratio > $30/mo for a tiny team (< 3 seats).
-- **Expected Output:** Flag for review, recommend standardizing on individual plans ($20/mo).
-- **Action Type:** `downgrade`
-- **Severity:** `moderate_savings`
-
-**Rule E: Fully Optimized Stack**
-- **Input:** Appropriate plan and seat count matching team size (e.g., ChatGPT Plus, 1 seat, $20/mo).
-- **Expected Output:** No action required, state "keep".
-- **Action Type:** `keep`
-- **Severity:** `optimized`
-
-### 2. Frontend & UX Testing
-- **Hydration & Persistence:** Verify that `localStorage` safely restores the `AuditFormValues` on page refresh without Next.js hydration mismatch errors (`useFormPersistence` hook).
-- **Dynamic Plan Loading:** Verify that selecting a vendor in the tool dropdown successfully populates the dependent plan selector dynamically from `pricingDatabase`.
-- **Result Navigation:** Ensure the `Generate Audit Report` action appropriately stores the engine's output and routes seamlessly to `/results`.
-
-### 3. Future Automated Test Implementation
-- Implement unit tests for `runAuditEngine` and `generateRecommendations` using **Vitest** or **Jest**.
-- Implement E2E flows using **Playwright** or **Cypress** to verify the complete user journey from Landing Page -> Audit Builder -> Results Page.
-
-### 4. Backend & Persistence Testing
-
-- Verify Firebase audit documents are created successfully after report generation.
-- Verify lead capture documents are stored correctly in Firestore.
-- Verify public reports render correctly using dynamic route IDs.
-- Verify transactional email requests return successful API responses.
-- Verify invalid audit IDs gracefully show a “Report Not Found” state.
-
-### 5. Planned CI Coverage
-
-Planned GitHub Actions workflow:
-- lint checks
-- TypeScript checks
-- audit-engine unit tests
-- route validation tests
-
-
-## Current Automated Test Coverage
-
-### Passing Test Count
-- 10 passing automated tests
-
-### Coverage Areas
-
-#### Audit Rules
-- ChatGPT Business downgrade logic
-- Claude Team overkill detection
-- Duplicate tooling detection
-- Optimized stack detection
-
-#### Financial Calculations
-- Monthly savings calculations
-- Annual savings calculations
-- Optimization score calculations
-- Zero-savings edge cases
-
-#### Reliability & Validation
-- Missing pricing data handling
-- Invalid seat count handling
-- Malformed audit input handling
+* Vitest
+* TypeScript
+* GitHub Actions CI
 
 ---
 
-## CI Integration
+# Run Tests
 
-GitHub Actions automatically runs:
-- lint checks
-- audit engine tests
+Run all automated tests:
 
-on every push and pull request to the `main` branch.
+```bash
+npm run test
+```
+
+Run tests in watch mode:
+
+```bash
+npm run test:watch
+```
+
+Run lint checks:
+
+```bash
+npm run lint
+```
+
+---
+
+# Automated Audit Engine Tests
+
+All audit engine tests are implemented using Vitest and currently pass.
+
+## Test File
+
+```text
+tests/audit-engine/audit-engine.test.ts
+```
+
+---
+
+# Implemented Automated Tests
+
+## 1. ChatGPT Business Downgrade Detection
+
+### Covers
+
+* Detecting overpayment on ChatGPT Business plans with low seat counts
+* Recommending downgrade to ChatGPT Plus
+* Monthly savings calculation accuracy
+
+### Run
+
+```bash
+npm run test
+```
+
+---
+
+## 2. Claude Team Minimum Seat Optimization
+
+### Covers
+
+* Detecting wasted spend caused by Claude Team minimum seat requirements
+* Recommendation generation
+* Deterministic savings calculations
+
+### Run
+
+```bash
+npm run test
+```
+
+---
+
+## 3. Duplicate Tool Consolidation Detection
+
+### Covers
+
+* Detecting overlapping spend across:
+
+  * ChatGPT
+  * Claude
+  * Gemini
+* Consolidation recommendation logic
+* Duplicate tooling savings calculations
+
+### Run
+
+```bash
+npm run test
+```
+
+---
+
+## 4. Optimized Stack Detection
+
+### Covers
+
+* Correct handling of already-optimized software stacks
+* Preventing fake savings recommendations
+* Returning `keep` recommendations correctly
+
+### Run
+
+```bash
+npm run test
+```
+
+---
+
+## 5. Monthly Savings Calculation Validation
+
+### Covers
+
+* Deterministic monthly savings calculations
+* Financial accuracy validation
+* Floating-point consistency checks
+
+### Run
+
+```bash
+npm run test
+```
+
+---
+
+## 6. Annual Savings Calculation Validation
+
+### Covers
+
+* Annualized savings calculations
+* Correct multiplication from monthly totals
+* Financial consistency validation
+
+### Run
+
+```bash
+npm run test
+```
+
+---
+
+## 7. Optimization Score Validation
+
+### Covers
+
+* Optimization score generation
+* Score range validation
+* Recommendation weighting consistency
+
+### Run
+
+```bash
+npm run test
+```
+
+---
+
+## 8. Zero Savings Edge Case Handling
+
+### Covers
+
+* Preventing negative savings outputs
+* Correct handling of optimized accounts
+* Stable recommendation behavior
+
+### Run
+
+```bash
+npm run test
+```
+
+---
+
+## 9. Missing Pricing Data Handling
+
+### Covers
+
+* Graceful failure handling for incomplete pricing data
+* Safe fallback behavior
+* Validation error handling
+
+### Run
+
+```bash
+npm run test
+```
+
+---
+
+## 10. Invalid Audit Payload Handling
+
+### Covers
+
+* Malformed audit payload rejection
+* Invalid seat count handling
+* Defensive validation logic
+
+### Run
+
+```bash
+npm run test
+```
+
+---
+
+# Current Passing Coverage
+
+## Passing Automated Tests
+
+* 10 passing audit engine tests
+
+## Primary Coverage Areas
+
+* deterministic recommendation logic
+* financial calculations
+* optimization scoring
+* duplicate tooling detection
+* downgrade recommendations
+* validation handling
+* graceful failure behavior
+
+---
+
+# Frontend Manual QA
+
+The following frontend flows were manually verified:
+
+* audit form persistence
+* localStorage hydration safety
+* responsive layouts
+* dynamic pricing rendering
+* report generation flow
+* public report routing
+* loading states
+* error states
+
+---
+
+# Backend Manual QA
+
+The following backend flows were manually verified:
+
+* Flask API connectivity
+* Gemini summary generation
+* Firebase persistence
+* transactional email delivery
+* fallback summary handling
+* invalid request handling
+
+---
+
+# GitHub Actions CI
+
+## Workflow File
+
+```text
+.github/workflows/ci.yml
+```
+
+---
+
+# CI Workflow Behavior
+
+GitHub Actions automatically runs on:
+
+* push to `main`
+* pull requests targeting `main`
+
+The workflow executes:
+
+1. dependency installation
+2. lint checks
+3. TypeScript validation
+4. automated audit engine tests
+
+---
+
+# Expected CI Result
+
+The latest commit must show:
+
+* ✅ lint passing
+* ✅ tests passing
+* ✅ GitHub Actions workflow green
+
+---
+
+# Reliability Philosophy
+
+StackSpend intentionally avoids AI-generated financial recommendations.
+
+The audit engine uses:
+
+* deterministic recommendation logic
+* normalized pricing data
+* rule-based calculations
+
+AI is restricted to:
+
+* narrative summaries only
+
+This architecture improves:
+
+* explainability
+* reliability
+* financial trustworthiness

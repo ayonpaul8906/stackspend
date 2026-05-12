@@ -1,33 +1,86 @@
-# Architecture
+# ARCHITECTURE
 
-## Stack
+## Overview
 
-### Frontend
+StackSpend is a full-stack AI subscription audit platform that helps teams identify unnecessary AI tooling spend, optimize subscription allocation, and estimate monthly + annual savings using deterministic recommendation logic.
+
+The system intentionally separates:
+
+* deterministic financial calculations
+* AI-generated narrative summaries
+
+This ensures recommendations remain explainable, predictable, and financially defensible.
+
+---
+
+# System Architecture
+
+```text
+Frontend (Next.js)
+│
+├── Landing Page
+├── Audit Builder
+├── Deterministic Audit Engine
+├── Public Report Pages
+├── Share UX
+└── Frontend State Management
+        │
+        ▼
+Backend (Flask API)
+│
+├── Gemini Summary Generation
+├── Transactional Email Services
+├── Backend Validation
+├── Rate Limiting
+└── Firebase Admin Integration
+        │
+        ▼
+Infrastructure Services
+│
+├── Firebase Firestore
+├── Gemini API
+└── SMTP / Nodemailer
+```
+
+---
+
+# Tech Stack
+
+## Frontend
 
 * Next.js 15 App Router
 * TypeScript
 * Tailwind CSS
 * shadcn/ui
 * Framer Motion
-
-### Form + Validation
-
 * React Hook Form
 * Zod
 
-### Backend
+---
+
+## Backend
+
+* Flask
+* Python
+* Firebase Admin SDK
+* Flask-CORS
+* Flask-Limiter
+* python-dotenv
+
+---
+
+## Infrastructure & Services
 
 * Firebase Firestore
+* Gemini API
 * Nodemailer
-
-### AI
-
-* Gemini API (planned for narrative summaries only)
+* GitHub Actions CI
 
 ---
 
 # Current System Flow
 
+```text
 User Input
 ↓
 Dynamic Audit Builder
@@ -42,37 +95,59 @@ Recommendation Generator
 ↓
 Firebase Audit Persistence
 ↓
-Dynamic Public Report URL
+Flask Summary Generation API
+↓
+Public Report Rendering
 ↓
 Lead Capture
 ↓
 Transactional Email Delivery
 ↓
-Results Rendering
+Shareable Public URL
+```
 
 ---
 
 # Pricing Architecture
 
-Pricing data is stored as normalized configuration objects inside:
+Pricing data is stored as normalized TypeScript configuration objects inside:
 
+```text
 src/data/pricing/
+```
 
 This architecture enables:
 
 * dynamic plan rendering
-* scalable vendor support
-* deterministic calculations
 * centralized pricing management
-* reusable pricing logic
+* deterministic calculations
+* reusable financial logic
+* scalable vendor support
+
+Each pricing entry includes:
+
+* vendor
+* plan name
+* pricing structure
+* use cases
+* features
+* verification date
+* official pricing source URL
+
+Enterprise plans with custom pricing are intentionally represented separately due to unavailable public pricing.
 
 ---
 
 # Audit Engine Philosophy
 
-The audit engine intentionally avoids using AI for financial calculations.
+The audit engine intentionally avoids using AI for:
 
-Recommendations are:
+* pricing calculations
+* financial optimization logic
+* savings generation
+* recommendation decisions
+
+Instead, recommendations are:
 
 * deterministic
 * rule-based
@@ -82,10 +157,36 @@ Recommendations are:
 This ensures:
 
 * predictable outputs
-* transparent savings logic
-* trustworthy recommendations
+* transparent recommendation logic
+* finance-readable reasoning
+* trustworthy savings calculations
 
-AI is reserved only for personalized narrative summaries.
+AI is reserved only for concise narrative summaries.
+
+---
+
+# AI System Philosophy
+
+Gemini is used exclusively for:
+
+* personalized audit summaries
+* concise user-facing explanations
+
+The model receives:
+
+* deterministic recommendation outputs
+* spend calculations
+* team information
+* selected tooling
+
+The model is explicitly instructed NOT to:
+
+* invent pricing
+* fabricate recommendations
+* generate savings numbers
+* hallucinate financial logic
+
+Fallback summaries are returned if AI generation fails.
 
 ---
 
@@ -96,21 +197,64 @@ Firebase Firestore stores:
 * audit reports
 * optimization recommendations
 * lead capture submissions
+* shareable report metadata
 
-Public audit reports are accessible using unique shareable URLs while excluding sensitive lead information.
+Public reports are accessible using unique shareable URLs while excluding sensitive lead information.
 
 ---
 
-# Email Delivery
+# Backend Responsibilities
 
-Transactional email delivery is implemented using Nodemailer.
+The Flask backend handles:
 
-This approach was chosen because:
+* AI summary generation
+* transactional email delivery
+* request validation
+* backend error handling
+* rate limiting
+* Firebase secure operations
 
-* lightweight integration
-* rapid MVP setup
-* full template control
-* reduced external dependency friction during development
+Sensitive integrations and API credentials are intentionally isolated from the frontend layer.
+
+---
+
+# Reliability & CI
+
+The project includes:
+
+* automated audit engine testing using Vitest
+* deterministic financial validation tests
+* GitHub Actions CI workflow
+* frontend error boundaries
+* graceful fallback handling
+* production-safe environment management
+
+CI automatically runs:
+
+* lint checks
+* audit engine tests
+
+on every push and pull request.
+
+---
+
+# Production Hardening
+
+The application includes:
+
+* accessibility improvements
+* Lighthouse optimization
+* loading skeletons
+* graceful error states
+* mobile responsiveness optimization
+* dynamic Open Graph metadata
+* deployment verification documentation
+
+Target Lighthouse scores:
+
+* Performance ≥ 85
+* Accessibility ≥ 90
+* Best Practices ≥ 90
 
 ---
 
@@ -118,22 +262,11 @@ This approach was chosen because:
 
 If scaled to 10k+ audits/day:
 
-* move audit execution to server-side jobs
-* cache pricing configuration
+* move audit execution to dedicated backend workers
 * add Redis-based rate limiting
+* cache pricing configuration aggressively
 * optimize Firestore indexing
-* generate async OG images
 * queue email delivery jobs
-
-# Reliability & CI
-
-The project includes:
-- automated audit engine testing using Vitest
-- deterministic financial validation tests
-- GitHub Actions CI workflow
-
-CI automatically runs:
-- lint checks
-- audit engine tests
-
-on every push and pull request to ensure reliability and prevent regression issues.
+* generate async OG images
+* add analytics instrumentation
+* separate AI summary generation into async processing
