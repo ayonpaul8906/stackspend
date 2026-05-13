@@ -180,7 +180,7 @@ def send_audit_email(
     msg.attach(MIMEText(html_body, "html"))
 
     try:
-        with smtplib.SMTP(_config.MAIL_SERVER, _config.MAIL_PORT) as server:
+        with smtplib.SMTP(_config.MAIL_SERVER, _config.MAIL_PORT,timeout=30) as server:
             server.ehlo()
             if _config.MAIL_USE_TLS:
                 server.starttls()
