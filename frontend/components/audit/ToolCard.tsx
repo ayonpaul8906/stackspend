@@ -31,6 +31,15 @@ export function ToolCard({ index, onRemove }: ToolCardProps) {
     const hyphenatedTool = toolLower.replace(/\s+/g, '-');
     
     return pricingDatabase.filter(p => {
+      // Gemini's paid subscriptions are branded as Google AI plans, so match the full family.
+      if (toolLower === "gemini") {
+        return (
+          p.id.startsWith("gemini-") ||
+          p.id.startsWith("google-ai-") ||
+          p.officialUrl.includes("gemini.google")
+        );
+      }
+
       // Direct matches
       if (
         p.id.includes(normalizedTool) || 

@@ -141,7 +141,7 @@
 
 ## Day 6 — 2026-05-12
 
-**Hours worked:** 4
+**Hours worked:** 5
 
 **What I did:**
 - Integrated Flask backend APIs with the existing Next.js frontend
@@ -165,3 +165,28 @@
 - Redesign the UI/UX with a more premium and intentional visual system
 - Finalize remaining documentation files
 - Capture final screenshots and verify deployment readiness
+
+
+## Day 7 — 2026-05-13
+
+**Hours worked:** 6
+
+**What I did:**
+Completed final UI/UX polish, redesigned the landing page with a more premium operator-focused aesthetic inspired by infrastructure tooling platforms like Credex, Linear, and Ramp, and refined the hero section, audit preview, typography, spacing, and floating visuals.
+
+Added and refined landing page sections including:
+
+* trusted tools
+* AI spend chaos
+* how it works
+* optimization examples
+* deterministic logic
+* final CTA
+
+Also finalized the StackSpend logo, completed deployment, verified backend integrations, tested public audit URLs and email delivery, and finished remaining documentation files and repository cleanup.
+
+**What I learned:**
+Small refinements in typography, spacing, hierarchy, and tone significantly improve how trustworthy and production-ready a product feels.
+
+**Blockers / what I'm stuck on:**
+Balancing originality with inspiration from infrastructure tooling websites without making the design feel visually copied.

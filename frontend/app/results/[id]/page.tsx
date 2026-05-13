@@ -65,7 +65,7 @@ export default async function SharedResultPage({ params }: Props) {
                 <p className="text-xs text-muted-foreground/70">ID: {id}</p>
               </div>
             </div>
-            <CopyLinkButton />
+            <CopyLinkButton reportId={id} />
           </div>
 
           {/* HERO SECTION */}

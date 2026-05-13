@@ -17,6 +17,11 @@ export const metadata: Metadata = {
   title: "StackSpend | AI Tool Cost Audit & Optimization",
   description: "Audit your ChatGPT, Claude, Cursor, and API spend in under 60 seconds. Identify duplicate subscriptions, unused seats, and optimize your team's AI stack.",
   keywords: ["AI tools", "cost audit", "ChatGPT", "Claude", "subscription management", "cost optimization"],
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     title: "StackSpend | Stop Overspending on AI Tools",
     description: "Audit your AI stack and identify savings in minutes",
@@ -44,16 +49,13 @@ export default function RootLayout({
         {/* Preconnect to external services */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="icon" href="/logo.png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
         
         {/* DNS prefetch for Firebase */}
         <link rel="dns-prefetch" href="https://firestore.googleapis.com" />
       </head>
-      <body className="min-h-screen bg-background text-foreground font-sans antialiased relative overflow-x-hidden selection:bg-primary/30 selection:text-primary-foreground">
-        {/* Subtle Background Glow Elements - optimized for performance */}
-        <div className="fixed inset-0 z-[-1] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background will-change-auto" />
-        <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 blur-[120px] pointer-events-none will-change-auto" />
-        <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-secondary/5 blur-[120px] pointer-events-none will-change-auto" />
-        
+      <body className="min-h-screen bg-background text-foreground font-sans antialiased overflow-x-hidden">
         {/* Main Content */}
         <div className="relative flex min-h-screen flex-col">
           {children}
