@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, AlertCircle } from "lucide-react";
 
@@ -39,17 +40,17 @@ export default function SampleReportPage() {
       {/* Minimal nav */}
       <div className="fixed top-0 left-0 right-0 z-50 border-b border-white/6 py-4">
         <div className="container mx-auto px-4 md:px-6 max-w-7xl flex items-center justify-between">
-          <a href="/" className="flex items-center gap-2.5 group">
+          <Link href="/" className="flex items-center gap-2.5 group">
             <div className="relative w-7 h-7 overflow-hidden rounded-md border border-white/10 bg-zinc-900">
               <Image src="/logo.png" alt="StackSpend" fill sizes="28px" className="object-cover" priority />
             </div>
             <span className="text-sm font-semibold text-zinc-200 hidden sm:inline">
               Stack<span className="text-zinc-500">Spend</span>
             </span>
-          </a>
-          <a href="/" className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors">
+          </Link>
+          <Link href="/" className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors">
             ← Home
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -145,13 +146,13 @@ export default function SampleReportPage() {
             </div>
 
             {/* Run new audit */}
-            <a
+            <Link 
               href="/audit"
               className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-white/9 text-zinc-400 text-sm font-medium hover:border-white/18 hover:text-zinc-200 transition-all"
             >
               Run a new audit instead
               <ArrowRight className="w-3.5 h-3.5" />
-            </a>
+            </Link>
 
             <p className="text-center text-xs text-zinc-700 mt-6">
               Report codes expire after 90 days · No account required
