@@ -8,7 +8,7 @@ Users can analyze their AI stack, detect overlapping subscriptions, optimize pla
 
 # Live Demo
 
-Deployed URL:
+Deployed URL: [https://stackspend-three.vercel.app/]
 
 ---
 
@@ -92,7 +92,7 @@ LLMs are used only for concise narrative summaries.
 
 | Landing Page                                                                                | Audit Builder                                                                             | Results Page                                                                                |
 | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| ![Landing](https://github.com/user-attachments/assets/bcec4e73-e4f2-4d1f-8cf4-94ac297a3feb) | ![Audit](https://github.com/user-attachments/assets/9d5110b5-b946-4410-808a-e0b123f11ae3) | ![Results](https://github.com/user-attachments/assets/354d3635-e1b4-465f-8871-add5e9904708) |
+| ![Landing](https://github.com/user-attachments/assets/b4c3cf15-7686-40ab-9a3e-9a772c557931) | ![Audit](https://github.com/user-attachments/assets/06f1ba63-0712-423e-9276-3c307b94abb5) | ![Results](https://github.com/user-attachments/assets/8272e2b9-e38d-4c2c-9d6f-18ab45fc2d49) |
 
 ---
 

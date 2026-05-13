@@ -2,31 +2,42 @@
 
 ## North Star Metric
 
-### Qualified Consultation Intent Rate
+### Qualified Lead Intent Rate
 
 The primary North Star metric for StackSpend is:
 
-> Percentage of completed audits that result in either:
->
-> * consultation booking intent
-> * qualified lead capture
-> * high-intent follow-up actions
+> Percentage of completed audits that result in a high-intent post-audit action.
 
-Examples:
+In the current product, those actions are:
 
-* clicking the “Talk to Credex” CTA
-* submitting contact information after viewing savings
-* requesting a deeper optimization review
+* submitting an email in the lead capture form
+* copying or sharing the public report link
+* clicking the high-savings "Talk to Credex" CTA
 
-This metric was chosen because StackSpend is fundamentally a B2B lead-generation and trust-building product, not a high-frequency consumer application.
+This metric fits the app as it exists today: StackSpend is a B2B trust-building and lead-generation product, not a high-frequency consumer app.
 
 The product succeeds when:
 
 1. users trust the audit enough to complete it
-2. meaningful optimization opportunities are identified
-3. that trust converts into a financial conversation
+2. the deterministic engine surfaces meaningful savings opportunities
+3. that trust converts into a lead, share, or sales conversation
 
 Daily Active Users (DAU) would be a poor metric because AI spend audits are naturally infrequent workflows. Most companies would realistically use the tool quarterly, during budgeting cycles, or while reviewing software spend.
+
+---
+
+# Actual Product Flow
+
+The current implementation works like this:
+
+1. a user fills out the audit form with organization details and current AI tools
+2. the frontend runs deterministic recommendation logic locally
+3. the app requests an AI-written summary using the precomputed audit result
+4. the full audit is saved to Firestore
+5. the user is redirected to a public shareable report page
+6. the report page exposes copy-link/share actions and a lead capture form
+
+That means the metrics should focus on audit completion, public report engagement, and lead capture rather than any checkout-style funnel.
 
 ---
 
@@ -57,10 +68,10 @@ Measures:
 
 * perceived report value
 * screenshot-worthiness
-* viral potential
-* social distribution quality
+* public link copying and sharing behavior
+* distribution quality
 
-The shareable public report is intentionally designed as the product’s built-in acquisition loop. High share rates suggest the audit output feels valuable enough to distribute publicly.
+The shareable public report is the product’s built-in acquisition loop. High share rates suggest the audit output feels valuable enough to distribute publicly.
 
 ---
 
@@ -72,7 +83,7 @@ Measures:
 * quality of optimization logic
 * business opportunity density
 
-If very few audits generate meaningful savings opportunities, the product may not create enough urgency to drive consultation intent.
+If very few audits generate meaningful savings opportunities, the product may not create enough urgency to drive lead capture or sales intent.
 
 This metric directly impacts monetization potential.
 
@@ -102,7 +113,7 @@ These events provide visibility into:
 
 I would seriously reconsider positioning or targeting if:
 
-* fewer than 5% of completed audits lead to consultation intent
+* fewer than 5% of completed audits lead to lead intent
   OR
 * fewer than 15% of audits identify meaningful savings opportunities
 
